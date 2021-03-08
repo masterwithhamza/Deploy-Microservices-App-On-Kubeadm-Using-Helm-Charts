@@ -9,9 +9,10 @@
     - name: "http"
       port: 9999
       targetPort: 9999
+      nodePort: 32470
+    type: "NodePort"
     selector:
       app: "zulu-api-gateway"
-    type: "NodePort"   
 ---  
   apiVersion: apps/v1
   kind: Deployment
@@ -31,7 +32,17 @@
       spec:
         containers:
           - name: "zulu"
-            image: "deekshithsn/zulu"
+            image: "deekshithsn/zuul"
             imagePullPolicy: "IfNotPresent"
             ports:
               - containerPort: 9999
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - react-ui
+              topologyKey: "kubernetes.io/hostname"

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 const App = () => {
 
@@ -6,9 +6,26 @@ const App = () => {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
   const [displayData, setDisplayData] = useState({url:''})
+  const [details, setDetails] = useState('');
+
+  
+  const getUserGeolocationDetails = () => {
+    fetch("/myip")
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          setDetails(data.url)
+        });
+  }
+
+  useEffect(()=>{
+    getUserGeolocationDetails()
+  },[])
 
   const handleApiCall = async (e) => {
-    const url = 'http://34.67.30.154:30724//'+e.target.name;
+    // const url = 'http://localhost:9999/'+e.target.name;
+    let url = 'http://'+details+':32470/'+e.target.name
+
     displayData.url=url
     let options = {}
       try {
