@@ -2,8 +2,8 @@
   kind: "Service"
   metadata:
     labels:
-      app: "zulu-api-gateway"
-    name: "zulu"
+      app: "zuul-api-gateway"
+    name: "zuul-api-gateway"
   spec:
     ports:
     - name: "http"
@@ -12,26 +12,26 @@
       nodePort: 32470
     type: "NodePort"
     selector:
-      app: "zulu-api-gateway"
+      app: "zuul-api-gateway"
 ---  
   apiVersion: apps/v1
   kind: Deployment
   metadata:
-    name: "zulu-api-gateway"
+    name: "zuul-api-gateway"
     labels: 
       app: zulu
   spec:
     replicas: 1
     selector:
         matchLabels:
-          app: "zulu-api-gateway"
+          app: "zuul-api-gateway"
     template:
       metadata:
         labels:
-          app: zulu-api-gateway
+          app: "zuul-api-gateway"
       spec:
         containers:
-          - name: "zulu"
+          - name: "zuul-api-gateway"
             image: "deekshithsn/zuul"
             imagePullPolicy: "IfNotPresent"
             ports:
