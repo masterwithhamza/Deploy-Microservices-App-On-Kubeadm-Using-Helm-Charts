@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.name | quote }}
+  name: {{ .Release.Name  }}
   labels: 
     {{- include "shoe-helm.labels" . | nindent 4 }}
 spec:
